@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+<title>Discord — Connexion</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+  html, body {
+    height: 100%;
+    font-family: "gg sans", "Noto Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    background: #23272a;
+    color: #fff;
+  }
+  body {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 40px 16px 32px;
+  }
+
+  .page {
+    width: 100%;
+    max-width: 480px;
+  }
+
+  /* ---- Logo ---- */
+  .brand {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 28px;
+  }
+  .brand-icon {
+    width: 32px;
+    height: 24px;
+    fill: #fff;
+    flex-shrink: 0;
+  }
+  .brand-text {
+    font-size: 26px;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: -0.3px;
+  }
+
+  /* ---- Titre ---- */
+  h1 {
+    font-size: 28px;
+    font-weight: 700;
+    color: #fff;
+    text-align: center;
+    margin-bottom: 28px;
+    letter-spacing: -0.3px;
+  }
+
+  /* ---- Champs ---- */
+  .field {
+    margin-bottom: 18px;
+  }
+
+  label {
+    display: block;
+    font-size: 16px;
+    font-weight: 400;
+    color: #f2f3f5;
+    margin-bottom: 8px;
+  }
+  .req { color: #f23f42; margin-left: 3px; }
+
+  input[type="text"],
+  input[type="password"] {
+    width: 100%;
+    height: 48px;
+    padding: 0 14px;
+    background: #2c2f33;
+    border: 1.5px solid #2c2f33;
+    border-radius: 4px;
+    color: #fff;
+    font-size: 16px;
+    font-family: inherit;
+    outline: none;
+    transition: border-color 0.15s;
+    -webkit-appearance: none;
+    appearance: none;
+  }
+  input[type="text"]:focus,
+  input[type="password"]:focus {
+    border-color: #5865f2;
+  }
+  input.err { border-color: #f23f42; }
+  input::placeholder { color: #4e5058; }
+
+  .errmsg {
+    color: #f23f42;
+    font-size: 13px;
+    font-style: italic;
+    margin-top: 5px;
+    display: none;
+  }
+  .errmsg.show { display: block; }
+
+  /* ---- Mot de passe oublié ---- */
+  .forgot {
+    display: inline-block;
+    margin-top: 10px;
+    color: #5865f2;
+    font-size: 15px;
+    text-decoration: none;
+  }
+  .forgot:hover { text-decoration: underline; }
+
+  /* ---- Bouton ---- */
+  .btn {
+    display: block;
+    width: 100%;
+    height: 52px;
+    margin-top: 22px;
+    background: #5865f2;
+    color: #fff;
+    border: none;
+    border-radius: 28px;
+    font-size: 16px;
+    font-weight: 600;
+    font-family: inherit;
+    cursor: pointer;
+    letter-spacing: 0.2px;
+    transition: background 0.15s, opacity 0.15s;
+    -webkit-appearance: none;
+    appearance: none;
+  }
+  .btn:hover { background: #4752c4; }
+  .btn:active { background: #3c45a5; }
+  .btn:disabled { opacity: 0.7; cursor: not-allowed; }
+
+  /* ---- S'inscrire ---- */
+  .signup {
+    margin-top: 14px;
+    font-size: 15px;
+    color: #949ba4;
+  }
+  .signup a {
+    color: #5865f2;
+    text-decoration: none;
+  }
+  .signup a:hover { text-decoration: underline; }
+
+  /* ---- Toast ---- */
+  .toast {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%) translateY(200%);
+    background: #23a559;
+    color: #fff;
+    padding: 12px 22px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.5);
+    transition: transform 0.28s cubic-bezier(0.34,1.56,0.64,1);
+    z-index: 99;
+    white-space: nowrap;
+    pointer-events: none;
+  }
+  .toast.show { transform: translateX(-50%) translateY(0); }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- Logo Discord -->
+  <div class="brand">
+    <svg class="brand-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 127.14 96.36" aria-hidden="true">
+      <path d="M107.7,8.07A105.15,105.15,0,0,0,81.47,0a72.06,72.06,0,0,0-3.36,6.83A97.68,97.68,0,0,0,49,6.83,72.37,72.37,0,0,0,45.64,0,105.89,105.89,0,0,0,19.39,8.09C2.79,32.65-1.71,56.6.54,80.21h0A105.73,105.73,0,0,0,32.71,96.36,77.7,77.7,0,0,0,39.6,85.25a68.42,68.42,0,0,1-10.85-5.18c.91-.66,1.8-1.34,2.66-2a75.57,75.57,0,0,0,64.32,0c.87.71,1.76,1.39,2.66,2a68.68,68.68,0,0,1-10.87,5.19,77,77,0,0,0,6.89,11.1A105.25,105.25,0,0,0,126.6,80.22h0C129.24,52.84,122.09,29.11,107.7,8.07ZM42.45,65.69C36.18,65.69,31,60,31,53s5-12.74,11.43-12.74S54,46,53.89,53,48.84,65.69,42.45,65.69Zm42.24,0C78.41,65.69,73.25,60,73.25,53s5-12.74,11.44-12.74S96.23,46,96.12,53,91.08,65.69,84.69,65.69Z"/>
+    </svg>
+    <span class="brand-text">Discord</span>
+  </div>
+
+  <h1>Ha, te revoilà !</h1>
+
+  <form id="form" novalidate>
+    <div class="field">
+      <label for="id">E-mail ou numéro de téléphone<span class="req">*</span></label>
+      <input type="text" id="id" autocomplete="username" />
+      <div class="errmsg" id="errid">E-mail ou numéro de téléphone invalide.</div>
+    </div>
+
+    <div class="field">
+      <label for="pw">Mot de passe<span class="req">*</span></label>
+      <input type="password" id="pw" autocomplete="current-password" />
+      <div class="errmsg" id="errpw">Le mot de passe doit contenir au moins 6 caractères.</div>
+      <a class="forgot" href="#" id="forgot">Tu as oublié ton mot de passe ?</a>
+    </div>
+
+    <button type="submit" class="btn" id="btn">Connexion</button>
+    <p class="signup">Besoin d'un compte ? <a href="#" id="signup">S'inscrire</a></p>
+  </form>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+(function () {
+  var emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+
+  function validId(v) {
+    v = v.trim();
+    if (!v) return false;
+    if (emailRe.test(v)) return true;
+    return /^\+?\d{8,15}$/.test(v.replace(/[\s\-().]/g, ''));
+  }
+
+  var form   = document.getElementById('form');
+  var idIn   = document.getElementById('id');
+  var pwIn   = document.getElementById('pw');
+  var errId  = document.getElementById('errid');
+  var errPw  = document.getElementById('errpw');
+  var btn    = document.getElementById('btn');
+  var toast  = document.getElementById('toast');
+  var timer;
+
+  function setErr(inp, el, msg) { inp.classList.add('err'); el.textContent = msg; el.classList.add('show'); }
+  function clrErr(inp, el)      { inp.classList.remove('err'); el.classList.remove('show'); }
+
+  idIn.addEventListener('input', function() { clrErr(idIn, errId); });
+  pwIn.addEventListener('input', function() { clrErr(pwIn, errPw); });
+
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+    var ok = true;
+    if (!validId(idIn.value)) { setErr(idIn, errId, 'E-mail ou numéro de téléphone invalide.'); ok = false; }
+    if (pwIn.value.length < 6) { setErr(pwIn, errPw, 'Le mot de passe doit contenir au moins 6 caractères.'); ok = false; }
+    if (!ok) return;
+    btn.textContent = 'Connexion en cours…';
+    btn.disabled = true;
+    setTimeout(function() {
+      btn.textContent = 'Connexion';
+      btn.disabled = false;
+      form.reset();
+      popup('Connexion réussie !');
+    }, 1200);
+  });
+
+  document.getElementById('forgot').addEventListener('click', function(e) { e.preventDefault(); popup('Récupération de mot de passe.'); });
+  document.getElementById('signup').addEventListener('click', function(e) { e.preventDefault(); popup("Page d'inscription."); });
+
+  function popup(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(timer);
+    timer = setTimeout(function() { toast.classList.remove('show'); }, 2800);
+  }
+})();
+</script>
+</body>
+</html>
